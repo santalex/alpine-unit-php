@@ -1,0 +1,25 @@
+FROM alpine:latest
+
+RUN VER=1.14.0 \
+    && CURL='curl' \
+    && DEPS='binutils isl libatomic mpfr4 mpc1 gcc musl-dev libc-dev make pkgconf php7-dev php7-static openssl-dev' \
+    && PHP='php7-embed' \
+    && apk add $DEPS $PHP $CURL \
+    && cd /tmp \
+    && wget https://unit.nginx.org/download/unit-$VER.tar.gz \
+    && tar zxf unit-$VER.tar.gz \
+    && cd /tmp/unit-$VER \
+    && ./configure --prefix=/usr --openssl --state=/var/lib/unit --control=unix:/var/run/control.unit.sock --log=/var/log/unit.log --pid=/var/run/unit.pid \
+    && make \
+    && ./configure php --module=php \
+    && make install \
+    && apk del $DEPS \
+    && cd /tmp \
+    && rm -rf unit-$VER* \
+    && mkdir -p /wwwroot
+
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN mkdir /docker-entrypoint.d/
+ENTRYPOINT ["sh", "/usr/local/bin/docker-entrypoint.sh"]
+
+CMD ["unitd", "--no-daemon"]
