@@ -1,4 +1,4 @@
-# Build Alpine-3.11/Nginx-unit-1.14.0/PHP-7.3 Docker Image
+# Alpine-3.11/Nginx-unit-1.14.0/PHP-7.3 Docker Image
 
 ## Images
 docker pull ggggggk/alpine-unit-php
