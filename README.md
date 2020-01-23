@@ -8,4 +8,4 @@ docker pull ggggggk/alpine-unit-php:none-ext
 docker pull ggggggk/alpine-unit-php:full-ext
 
 ## How to use
-[Here](https://unit.nginx.org/installation/#docker-images)
+[Here](https://unit.nginx.org/howto/docker/)
